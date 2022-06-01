@@ -20,8 +20,13 @@ function createTextElement(text) {
   }
 }
 
+function redner(element, container) {
+  // TODO
+}
+
 const AJu = {
   createElemnt,
+  render,
 }
 
 const element = AJu.createElement(
@@ -31,12 +36,5 @@ const element = AJu.createElement(
   AJu.createElement('b')
 )
 
-/** @jsx AJu.createElement */
-// const element = (
-//   <div id="foo">
-//     <a>bar</a>
-//     <b />
-//   </div>
-// )
 const container = document.getElementById('root')
-ReactDOM.render(element, container)
+AJu.render(element, container)
