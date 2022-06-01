@@ -38,6 +38,22 @@ function render(element, container) {
   container.appendChild(dom)
 }
 
+let nextUnitOfWork = null
+
+function workLoop(deadline) {
+  let shouldWork = true
+  while (nextUnitOfWork && shouldWork) {
+    nextUnitOfWork = performUnitOfWork(nextUnitOfWork)
+    shouldWork = deadline.timeReadining() > 0
+  }
+  requestIdleCallback(workLoop)
+}
+requestIdleCallback(workLoop)
+
+function performUnitOfWork(nextUnitOfWork) {
+  // TODO
+}
+
 const AJu = {
   createElement,
   render,
