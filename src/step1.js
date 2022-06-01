@@ -20,11 +20,23 @@ function createTextElement(text) {
   }
 }
 
-const element = React.createElement(
+const AJu = {
+  createElemnt,
+}
+
+const element = AJu.createElement(
   'div',
   { id: 'foo' },
-  React.createElement('a', null, 'bar'),
-  React.createElement('b')
+  AJu.createElement('a', null, 'bar'),
+  AJu.createElement('b')
 )
+
+/** @jsx AJu.createElement */
+// const element = (
+//   <div id="foo">
+//     <a>bar</a>
+//     <b />
+//   </div>
+// )
 const container = document.getElementById('root')
 ReactDOM.render(element, container)
