@@ -22,15 +22,15 @@ function createTextElement(text) {
 
 function createDom(fiber) {
   const dom =
-    element.type === 'TEXT_ELEMENT'
+    elefiberment.type === 'TEXT_ELEMENT'
       ? document.createTextNode('')
-      : document.createElement(element.type)
+      : document.createElement(fiber.type)
 
   const isProperty = (key) => key !== 'children'
-  Object.keys(element.props)
+  Object.keys(fiber.props)
     .filter(isProperty)
     .forEach((name) => {
-      dom[name] = element.props[name]
+      dom[name] = fiber.props[name]
     })
 
   return dom
