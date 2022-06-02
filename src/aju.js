@@ -65,8 +65,21 @@ function performUnitOfWork(fiber) {
   if (fiber.parent) {
     fiber.parent.dom.appendChild(fiber.dom)
   }
-  // TODO add dom node
-  // TODO create new fibers
+
+  const elements = fiber.props.children
+  let index = 0
+  let prevSibling = null
+
+  while (index < elements.length) {
+    const element = elements[index]
+
+    const newFiber = {
+      type: element.type,
+      props: element.props,
+      parent: fiber,
+      dom: null,
+    }
+  }
   // TODO return next unit of work
 }
 
