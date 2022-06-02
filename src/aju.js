@@ -20,7 +20,7 @@ function createTextElement(text) {
   }
 }
 
-function render(element, container) {
+function createDom(fiber) {
   const dom =
     element.type === 'TEXT_ELEMENT'
       ? document.createTextNode('')
@@ -33,9 +33,11 @@ function render(element, container) {
       dom[name] = element.props[name]
     })
 
-  element.props.children.map((child) => render(child, dom))
+  return dom
+}
 
-  container.appendChild(dom)
+function render(element, container) {
+  // TODO set next unit of work
 }
 
 let nextUnitOfWork = null
