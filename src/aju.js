@@ -37,7 +37,12 @@ function createDom(fiber) {
 }
 
 function render(element, container) {
-  // TODO set next unit of work
+  nextUnitOfWork = {
+    dom: container,
+    props: {
+      children: [element],
+    },
+  }
 }
 
 let nextUnitOfWork = null
