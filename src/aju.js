@@ -57,8 +57,17 @@ function workLoop(deadline) {
 }
 requestIdleCallback(workLoop)
 
-function performUnitOfWork(nextUnitOfWork) {
-  // TODO
+function performUnitOfWork(fiber) {
+  if (!fiber.dom) {
+    fiber.dom = createDom(fiber)
+  }
+
+  if (fiber.parent) {
+    fiber.parent.dom.appendChild(fiber.dom)
+  }
+  // TODO add dom node
+  // TODO create new fibers
+  // TODO return next unit of work
 }
 
 const AJu = {
