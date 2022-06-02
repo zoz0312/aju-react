@@ -89,7 +89,18 @@ function performUnitOfWork(fiber) {
     prevSibling = newFiber
     index++
   }
-  // TODO return next unit of work
+
+  if (fiber.child) {
+    return fiber.child
+  }
+
+  let nextFiber = fiber
+  while (nextFiber) {
+    if (nextFiber.sibling) {
+      return nextFiber.sibling
+    }
+    nextFiber = nextFiber.parent
+  }
 }
 
 const AJu = {
