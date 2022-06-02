@@ -79,6 +79,15 @@ function performUnitOfWork(fiber) {
       parent: fiber,
       dom: null,
     }
+
+    if (index === 0) {
+      fiber.child = newFiber
+    } else {
+      prevSibling.sibling = newFiber
+    }
+
+    prevSibling = newFiber
+    index++
   }
   // TODO return next unit of work
 }
