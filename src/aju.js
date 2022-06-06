@@ -106,16 +106,17 @@ function performUnitOfWork(fiber) {
 
 function reconcileChildren(wipFiber, elements) {
   let index = 0
+  let oldFiber = wipFiber.alternate && wipFiber.alternate.child
   let prevSibling = null
 
-  while (index < elements.length) {
+  while (index < elements.length || oldFiber != null) {
     const element = elements[index]
+    let newFiber = null
 
-    const newFiber = {
-      type: element.type,
-      props: element.props,
-      parent: wipFiber,
-      dom: null,
+    // TODO compare oldFiber to element
+
+    if (oldFiber) {
+      oldFiber = oldFiber.sibling
     }
 
     if (index === 0) {
