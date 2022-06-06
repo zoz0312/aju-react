@@ -116,13 +116,31 @@ function reconcileChildren(wipFiber, elements) {
     const sameType = oldFiber && element && element.type == oldFiber.type
 
     if (sameType) {
-      // TODO update the node
+      // update the node
+      newFiber = {
+        type: oldFiber.type,
+        props: element.props,
+        dom: oldFiber.dom,
+        parent: wipFiber,
+        alternate: oldFiber,
+        effectTag: 'UPDATE',
+      }
     }
     if (element && !sameType) {
-      // TODO add this node
+      // add this node
+      newFiber = {
+        type: element.type,
+        props: element.props,
+        dom: null,
+        parent: wipFiber,
+        alternate: null,
+        effectTag: 'PLACEMENT',
+      }
     }
     if (oldFiber && !sameType) {
-      // TODO delete the oldFiber's node
+      // delete the oldFiber's node
+      oldFiber.effectTag = 'DELETION'
+      deletions.push(oldFiber)
     }
 
     if (oldFiber) {
