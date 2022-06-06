@@ -38,6 +38,7 @@ function createDom(fiber) {
 
 function commitRoot() {
   commitWork(wipRoot.child)
+  currentRoot = wipRoot
   wipRoot = null
 }
 
@@ -58,12 +59,14 @@ function render(element, container) {
     props: {
       children: [element],
     },
+    alternate: currentRoot,
   }
 
   nextUnitOfWork = wipRoot
 }
 
 let nextUnitOfWork = null
+let currentRoot = null
 let wipRoot = null
 
 function workLoop(deadline) {
@@ -86,28 +89,7 @@ function performUnitOfWork(fiber) {
   }
 
   const elements = fiber.props.children
-  let index = 0
-  let prevSibling = null
-
-  while (index < elements.length) {
-    const element = elements[index]
-
-    const newFiber = {
-      type: element.type,
-      props: element.props,
-      parent: fiber,
-      dom: null,
-    }
-
-    if (index === 0) {
-      fiber.child = newFiber
-    } else {
-      prevSibling.sibling = newFiber
-    }
-
-    prevSibling = newFiber
-    index++
-  }
+  reconcileChildren(fiber, elements)
 
   if (fiber.child) {
     return fiber.child
@@ -119,6 +101,31 @@ function performUnitOfWork(fiber) {
       return nextFiber.sibling
     }
     nextFiber = nextFiber.parent
+  }
+}
+
+function reconcileChildren(wipFiber, elements) {
+  let index = 0
+  let prevSibling = null
+
+  while (index < elements.length) {
+    const element = elements[index]
+
+    const newFiber = {
+      type: element.type,
+      props: element.props,
+      parent: wipFiber,
+      dom: null,
+    }
+
+    if (index === 0) {
+      wipFiber.child = newFiber
+    } else {
+      prevSibling.sibling = newFiber
+    }
+
+    prevSibling = newFiber
+    index++
   }
 }
 
