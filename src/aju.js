@@ -229,7 +229,15 @@ function reconcileChildren(wipFiber, elements) {
 const AJu = {
   createElement,
   render,
+  useState,
 }
+
+/** @jsx AJu.createElement */
+function Counter() {
+  const [state, setState] = AJu.useState(1)
+  return <h1 onClick={() => setState((c) => c + 1)}>Count: {state}</h1>
+}
+const element2 = <Counter />
 
 const element = AJu.createElement(
   'div',
