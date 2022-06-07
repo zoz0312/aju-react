@@ -179,7 +179,23 @@ function useState(initial) {
 
   const hook = {
     state: oldHook ? oldHook.state : initial,
+    queue: [],
   }
+
+  const setState = (action) => {
+    hook.queue.push(action)
+    wipRoot = {
+      dom: currentRoot.dom,
+      props: currentRoot.props,
+      alternate: currentRoot,
+    }
+    nextUnitOfWork = wipRoot
+    deletions = []
+  }
+
+  wipFiber.hooks.push(hook)
+  hookIndex++
+  return [hook.state, setState]
 }
 
 function updateHostComponent(fiber) {
