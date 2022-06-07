@@ -182,6 +182,11 @@ function useState(initial) {
     queue: [],
   }
 
+  const actions = oldHook ? oldHook.queue : []
+  actions.forEach((action) => {
+    hook.state = action(hook.state)
+  })
+
   const setState = (action) => {
     hook.queue.push(action)
     wipRoot = {
